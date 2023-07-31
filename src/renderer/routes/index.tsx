@@ -11,7 +11,7 @@ function Landing() {
       <Link to="/auth/login">
         <Button type="button">Login</Button>
       </Link>
-      <Link to="/app">
+      <Link to="/app/dashboard">
         <Button type="button">Dashboard</Button>
       </Link>
     </div>
