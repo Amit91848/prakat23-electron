@@ -33,7 +33,7 @@ export const ViewDataModal = ({ isOpen, onClose, information }: Props) => {
   return (
     <Modal isCentered size="6xl" isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
-      <ModalContent background="darkbg" color="textHeading">
+      <ModalContent color="textHeading">
         <ModalHeader>Information about the address</ModalHeader>
         <ModalCloseButton />
         <ModalBody overflowY="scroll" p="10" maxH="calc(100vh - 300px)">
@@ -51,7 +51,7 @@ export const ViewDataModal = ({ isOpen, onClose, information }: Props) => {
             </Text>
           </Stack>
           <Box>
-            <Text fontSize="lg">Incoming</Text>
+            <Heading>Incoming</Heading>
             <TableContainer>
               <Table variant="simple">
                 <Thead>

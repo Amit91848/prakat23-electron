@@ -24,7 +24,7 @@ const Pagination = ({
     <Flex py="4" justifyContent="center" gap="8" align="center">
       <Button
         variant="outline"
-        _hover={{ backgroundColor: 'transparent', scale: '1.1' }}
+        _hover={{ scale: '1.1' }}
         isDisabled={currentPage <= 1}
         onClick={handlePrevPage}
         leftIcon={<ChevronLeftIcon />}
@@ -37,7 +37,7 @@ const Pagination = ({
 
       <Button
         variant="outline"
-        _hover={{ backgroundColor: 'transparent', scale: '1.1' }}
+        _hover={{ scale: '1.1' }}
         isDisabled={currentPage === totalPages}
         onClick={handleNextPage}
         rightIcon={<ChevronRightIcon />}

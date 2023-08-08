@@ -74,7 +74,7 @@ export const AddTagsFilterModal = ({
   return (
     <Modal isOpen={isOpen} onClose={onClose} size={'2xl'}>
       <ModalOverlay />
-      <ModalContent p="5" bg="darkbg" color="textHeading">
+      <ModalContent p="5" color="textHeading">
         {' '}
         <ModalHeader>Add Tag Filter</ModalHeader>
         <ModalCloseButton />

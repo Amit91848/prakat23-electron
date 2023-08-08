@@ -33,7 +33,7 @@ export const AddCrawlerModal = ({ isOpen, onClose }: Props) => {
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
-      <ModalContent p="5" bg="darkbg" color="textHeading">
+      <ModalContent p="5" color="textHeading">
         <ModalHeader>Crawler Settings</ModalHeader>
         <ModalCloseButton />
         <ModalBody p="4">

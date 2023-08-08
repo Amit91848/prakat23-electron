@@ -1,7 +1,15 @@
 import { Flex, Stack } from '@chakra-ui/layout';
 import { FaSearchengin } from 'react-icons/fa';
 import { IconType } from 'react-icons';
-import { Button, ButtonProps, Icon, Text, Spacer } from '@chakra-ui/react';
+import {
+  Button,
+  ButtonProps,
+  HStack,
+  Text,
+  Spacer,
+  IconButton,
+  useColorMode,
+} from '@chakra-ui/react';
 import { ReactNode } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { FiLogOut } from 'react-icons/fi';
@@ -9,6 +17,7 @@ import { GiLongLeggedSpider } from 'react-icons/gi';
 import { HiOutlineDocumentDuplicate } from 'react-icons/hi';
 import { FaBitcoin } from 'react-icons/fa';
 import storage from 'renderer/lib/storage';
+import { MoonIcon, SunIcon } from '@chakra-ui/icons';
 
 interface Props {
   text: string;
@@ -30,7 +39,6 @@ function SidebarButton({
       key={text}
       borderRadius="none"
       _hover={{
-        background: '#292325',
         scale: 1,
       }}
       w="100.5%"
@@ -57,11 +65,17 @@ function SidebarButton({
 }
 
 function Sidebar() {
+  const { colorMode, toggleColorMode } = useColorMode();
+
   return (
     <Stack spacing="0" minW="16rem" borderRight="2px #2E2F34 solid" w="64">
-      <Link to="/app/dashboard">
-        <Button>Dashboard</Button>
-      </Link>
+      {/* <Stack> */}
+      <IconButton
+        icon={colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
+        onClick={toggleColorMode}
+        aria-label="Toggle Color Mode"
+      />
+      {/* </Stack> */}
       <SidebarButton
         ButtonIcon={FaSearchengin}
         link="/app/search"

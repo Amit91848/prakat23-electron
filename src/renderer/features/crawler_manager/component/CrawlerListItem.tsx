@@ -8,9 +8,6 @@ interface Props {
 export const CrawlerListItem = ({ item }: Props) => {
   return (
     <Flex
-      _hover={{
-        background: '#292325',
-      }}
       borderBottom="2px"
       borderBottomColor="#2E2F34"
       h="28"

@@ -51,7 +51,7 @@ function AppProvider({ children }: AppProviderProps) {
       <ErrorBoundary FallbackComponent={ErrorFallback}>
         <HelmetProvider>
           <QueryClientProvider client={queryClient}>
-            {process.env.NODE_ENV !== 'test' && <ReactQueryDevtools />}
+            {/* {process.env.NODE_ENV !== 'test' && <ReactQueryDevtools />} */}
             <Router>{children}</Router>
           </QueryClientProvider>
         </HelmetProvider>

@@ -104,9 +104,6 @@ export const QueryListItem = ({ q }: Props) => {
   return (
     <Fade in>
       <Flex
-        _hover={{
-          background: '#292325',
-        }}
         borderBottom="2px"
         borderBottomColor="#2E2F34"
         h="28"
@@ -143,11 +140,7 @@ export const QueryListItem = ({ q }: Props) => {
             {' '}
             <Popover>
               <PopoverTrigger>
-                <Button
-                  color="textHeading"
-                  _hover={{ background: 'transparent' }}
-                  variant="outline"
-                >
+                <Button color="textHeading" variant="outline">
                   Tags
                 </Button>
               </PopoverTrigger>

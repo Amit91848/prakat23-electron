@@ -45,7 +45,7 @@ export const ReportViewer = ({ isOpen, onClose, report }: Props) => {
   return (
     <Modal size="4xl" onClose={onClose} isOpen={isOpen} isCentered>
       <ModalOverlay />
-      <ModalContent p="5" bg="darkbg" color="textHeading">
+      <ModalContent p="5" color="textHeading">
         <ModalHeader> Report Generated</ModalHeader>
         <ModalCloseButton />
         <ModalBody maxH="calc(100vh - 260px)" overflowY="scroll" p="4">
