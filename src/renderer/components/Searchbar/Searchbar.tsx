@@ -15,6 +15,7 @@ interface Props {
 }
 
 export const SearchBar = ({ query, queryChange, setTagModalOpen }: Props) => {
+  console.log(query);
   return (
     <>
       <Flex py="1" px="6" w="100%" gap="4">
@@ -34,7 +35,11 @@ export const SearchBar = ({ query, queryChange, setTagModalOpen }: Props) => {
             <Icon color="#717171" as={FaSearch} />{' '}
           </InputLeftElement>
         </InputGroup>
-        <Button background="#2F3034" onClick={() => setTagModalOpen(true)}>
+        <Button
+          background="#2F3034"
+          onClick={() => setTagModalOpen(true)}
+          isDisabled={query === ''}
+        >
           <Icon color="#717171" as={FaFilter} />{' '}
         </Button>
       </Flex>

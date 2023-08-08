@@ -8,7 +8,7 @@ import { QueryList } from './QueryList';
 import { SearchPageResponse } from '../types';
 import { Box, Divider, Stack } from '@chakra-ui/react';
 import { SearchBar } from 'renderer/components/Searchbar/Searchbar';
-import { AddTagFilterModal } from 'renderer/components/Searchbar/AddTagFilterModal';
+import { AddTagsFilterModal } from 'renderer/components/Searchbar/AddTagsFilterModal';
 import { Tags } from './Tag/Tags';
 
 export const SearchPage = () => {
@@ -19,15 +19,15 @@ export const SearchPage = () => {
   const [queryResults, setQueryResults] = useState<SearchPageResponse[]>([]);
 
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [tag, setTag] = useState<string>('');
+  const [tags, setTags] = useState<string[]>([]);
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
 
-  const fetchSearchResults = async (q: string, p: number, tag: string) => {
+  const fetchSearchResults = async (q: string, p: number, tag: string[]) => {
     const response = await axios.get(
-      `http://localhost:8000/search/?q=${q}&page=${p}&pageCount=${pageCount}&tag=${tag}`
+      `http://localhost:8000/search/?q=${q}&page=${p}&pageCount=${pageCount}&tags=${tags.toString()}`
     );
 
     setQueryResults(response.data);
@@ -40,16 +40,16 @@ export const SearchPage = () => {
   useEffect(() => {
     if (searchQuery !== '') {
       setPage(1); // Reset the page to 1 when the search query changes
-      fetchSearchResults(searchQuery, 1, tag); // Fetch results with the new query and page 1
+      fetchSearchResults(searchQuery, 1, tags); // Fetch results with the new query and page 1
     }
-  }, [searchQuery, tag]);
+  }, [searchQuery, tags]);
 
   useEffect(() => {
     if (searchQuery !== '') {
-      fetchSearchResults(searchQuery, page, tag); // Fetch results with the updated page value
+      fetchSearchResults(searchQuery, page, tags); // Fetch results with the updated page value
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page, tag]);
+  }, [page, tags]);
 
   return (
     <Stack h="full">
@@ -61,7 +61,11 @@ export const SearchPage = () => {
             queryChange={setSearchQuery}
             setTagModalOpen={setIsModalOpen}
           />
-          <Tags tags={tag} onRemoveTags={setTag} isAnyTagApplied={tag !== ''} />
+          <Tags
+            tags={tags}
+            onRemoveTags={setTags}
+            isAnyTagApplied={tags.length !== 0}
+          />
           <Divider variant="primary" />
           <QueryList queryList={queryResults} />
           <Pagination
@@ -72,10 +76,10 @@ export const SearchPage = () => {
         </Stack>
       </Box>
       {isModalOpen && (
-        <AddTagFilterModal
+        <AddTagsFilterModal
           isOpen={isModalOpen}
           onClose={handleCloseModal}
-          onAddTagFilter={setTag}
+          onAddTagsFilter={setTags}
         />
       )}
     </Stack>

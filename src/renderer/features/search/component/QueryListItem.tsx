@@ -16,7 +16,6 @@ import {
   Stack,
   Text,
 } from '@chakra-ui/react';
-import { Tags } from './Tag/Tags';
 import { SearchPageResponse } from '../types';
 
 interface Props {
