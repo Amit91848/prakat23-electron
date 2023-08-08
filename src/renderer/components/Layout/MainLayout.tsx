@@ -7,6 +7,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { FiLogOut } from 'react-icons/fi';
 import { GiLongLeggedSpider } from 'react-icons/gi';
 import { HiOutlineDocumentDuplicate } from 'react-icons/hi';
+import { FaBitcoin } from 'react-icons/fa';
 import storage from 'renderer/lib/storage';
 
 interface Props {
@@ -49,7 +50,6 @@ function SidebarButton({
       {...options}
     >
       <Flex alignItems="center">
-        {text === 'Logout' && <Icon as={ButtonIcon} mr="3" />}
         <Text fontSize="lg">{text}</Text>
       </Flex>
     </Button>
@@ -77,6 +77,12 @@ function Sidebar() {
         link="/app/crawler"
         text="Crawler Manager"
       />
+      <SidebarButton
+        ButtonIcon={FaBitcoin}
+        link="/app/bitcoin-trails"
+        text="BTC Trails"
+      />
+
       <Spacer />
       <SidebarButton
         ButtonIcon={FiLogOut}

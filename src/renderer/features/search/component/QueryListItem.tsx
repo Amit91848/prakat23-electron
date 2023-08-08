@@ -25,7 +25,7 @@ interface Props {
 export const QueryListItem = ({ q }: Props) => {
   const handleGenerateReport = async () => {
     const response = await axios.post('http://164.52.214.185/genreport', {
-      user_id: '22',
+      user_id: '64cf89d9f4f48086a8fe1fa7',
       obj_id: q.id,
     });
 

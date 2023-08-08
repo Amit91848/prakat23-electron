@@ -1,6 +1,7 @@
 import { Button, Stack } from '@chakra-ui/react';
 import { Link, Outlet } from 'react-router-dom';
 import { MainLayout } from 'renderer/components/Layout';
+import { BTCTrailRoute } from 'renderer/features/btc_trails';
 import { lazyImport } from 'renderer/utils';
 
 const { SearchRoutes } = lazyImport(
@@ -59,6 +60,7 @@ const protectedRoutes = [
       { path: 'search/*', element: <SearchRoutes /> },
       { path: 'crawler/*', element: <CrawlerManagerRoutes /> },
       { path: 'report-manager/*', element: <ReportManagerRoutes /> },
+      { path: 'bitcoin-trails', element: <BTCTrailRoute /> },
     ],
   },
 ];
