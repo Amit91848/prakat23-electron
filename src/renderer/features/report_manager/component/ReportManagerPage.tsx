@@ -1,7 +1,7 @@
 import { Divider, Stack } from '@chakra-ui/react';
 import { useState } from 'react';
 import { Heading } from 'renderer/components/Heading';
-import { Searchbar } from 'renderer/components/Searchbar/Searchbar';
+import { SearchBar } from 'renderer/components/Searchbar/Searchbar';
 import { ReportList } from './ReportsList';
 import { IReport } from '../types';
 import { ReportViewer } from './ReportViewer';
@@ -82,7 +82,7 @@ export const ReportManagerPage = () => {
       <Heading title="Report Manager" />
       <Divider />
 
-      <Searchbar query={reportQuery} queryChange={setReportQuery} />
+      <SearchBar query={reportQuery} queryChange={setReportQuery} />
       <ReportList reports={demo} handleViewReport={handleViewOpen} />
       {isModalOpen && (
         <ReportViewer

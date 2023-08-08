@@ -5,6 +5,7 @@ import {
   Fade,
   Flex,
   Grid,
+  GridItem,
   Popover,
   PopoverArrow,
   PopoverBody,
@@ -24,7 +25,7 @@ interface Props {
 
 export const QueryListItem = ({ q }: Props) => {
   const handleGenerateReport = async () => {
-    const response = await axios.post('http://164.52.214.150/genreport', {
+    const response = await axios.post('http://164.52.214.185/genreport', {
       user_id: '22',
       obj_id: q.id,
     });
@@ -45,66 +46,78 @@ export const QueryListItem = ({ q }: Props) => {
         justifyContent="space-between"
         alignItems="center"
       >
-        <Stack w="fit-content" maxW="650px">
-          <Box overflow="hidden" textOverflow="ellipsis" whiteSpace="nowrap">
-            <Text fontSize="lg" as="b">
-              {' '}
-              {q.title}
-            </Text>
-          </Box>
-          <Box
-            ml="2"
-            overflow="hidden"
-            textOverflow="ellipsis"
-            whiteSpace="nowrap"
-          >
-            <Text fontSize="sm"> {q.url} </Text>
-          </Box>
-        </Stack>
-        <Grid>
-          {/* <Tags tag /> */}
-          <Popover>
-            <PopoverTrigger>
-              <Button
-                color="textHeading"
-                _hover={{ background: 'transparent' }}
-                variant="outline"
+        <Grid templateColumns="6fr 3fr 1fr" gap={4}>
+          <GridItem>
+            {' '}
+            <Stack w="650px">
+              <Box
+                overflow="hidden"
+                textOverflow="ellipsis"
+                whiteSpace="nowrap"
               >
-                Tags
+                <Text fontSize="lg" as="b">
+                  {' '}
+                  {q.title}
+                </Text>
+              </Box>
+              <Box
+                ml="2"
+                overflow="hidden"
+                textOverflow="ellipsis"
+                whiteSpace="nowrap"
+              >
+                <Text fontSize="sm"> {q.url} </Text>
+              </Box>
+            </Stack>
+          </GridItem>
+          {/* <Tags tag /> */}
+          <GridItem display="flex" justifyContent="center">
+            {' '}
+            <Popover>
+              <PopoverTrigger>
+                <Button
+                  color="textHeading"
+                  _hover={{ background: 'transparent' }}
+                  variant="outline"
+                >
+                  Tags
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent
+                boxShadow="2xl"
+                color="textHeading"
+                background="darkbg"
+              >
+                <PopoverArrow />
+                <PopoverCloseButton />
+                <PopoverHeader p="2">
+                  <Text as="b"> Tags Identified by Our Model </Text>
+                </PopoverHeader>
+                <PopoverBody>
+                  <Box>
+                    <Text>
+                      {q.tags.map((tag, index) => (
+                        // {index > 0 && ', '} {tag}
+                        // <Text color="whiteAlpha.700">
+                        <span>
+                          {index > 0 && ', '} {tag}
+                        </span>
+                        // </Text>
+                      ))}
+                    </Text>
+                  </Box>
+                </PopoverBody>
+              </PopoverContent>
+            </Popover>
+          </GridItem>
+          <GridItem>
+            <Box>
+              <Button onClick={handleGenerateReport} variant="primaryRedBtn">
+                Generate Report
               </Button>
-            </PopoverTrigger>
-            <PopoverContent
-              boxShadow="2xl"
-              color="textHeading"
-              background="darkbg"
-            >
-              <PopoverArrow />
-              <PopoverCloseButton />
-              <PopoverHeader p="2">
-                <Text as="b"> Tags Identified by Our Model </Text>
-              </PopoverHeader>
-              <PopoverBody>
-                <Box>
-                  <Text>
-                    {q.tags.map((tag, index) => (
-                      // {index > 0 && ', '} {tag}
-                      // <Text color="whiteAlpha.700">
-                      <span>
-                        {index > 0 && ', '} {tag}
-                      </span>
-                      // </Text>
-                    ))}
-                  </Text>
-                </Box>
-              </PopoverBody>
-            </PopoverContent>
-          </Popover>
+            </Box>
+          </GridItem>
         </Grid>
-        <Box>
-          <Button onClick={handleGenerateReport} variant="primaryRedBtn">
-            Generate Report
-          </Button>
-        </Box>
       </Flex>
     </Fade>
   );
