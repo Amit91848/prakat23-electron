@@ -1,11 +1,18 @@
 import axios from 'axios';
 import {
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogOverlay,
   Box,
   Button,
   Fade,
   Flex,
   Grid,
   GridItem,
+  Input,
   Popover,
   PopoverArrow,
   PopoverBody,
@@ -17,20 +24,82 @@ import {
   Text,
 } from '@chakra-ui/react';
 import { SearchPageResponse } from '../types';
+import { useRef, useState } from 'react';
+import { useToast } from '@chakra-ui/react';
 
 interface Props {
   q: SearchPageResponse;
 }
 
-export const QueryListItem = ({ q }: Props) => {
+interface AlertNameProps {
+  isOpen: boolean;
+  onClose: VoidFunction;
+  q: SearchPageResponse;
+}
+
+function NameAlertDialog({ isOpen, onClose, q }: AlertNameProps) {
+  const [name, setName] = useState('');
+  const toast = useToast();
   const handleGenerateReport = async () => {
     const response = await axios.post('http://164.52.214.185/genreport', {
       user_id: '64cf89d9f4f48086a8fe1fa7',
       obj_id: q.id,
+      name: name,
     });
 
+    if (response.status === 200) {
+      onClose();
+      toast({
+        title: 'Report is being created',
+        description: 'Check the report tab to see the progress',
+        status: 'success',
+        duration: 3000,
+        isClosable: true,
+      });
+    }
     console.log(response.data);
   };
+  const cancelRef = useRef();
+  return (
+    <AlertDialog
+      isOpen={isOpen}
+      leastDestructiveRef={cancelRef}
+      onClose={onClose}
+    >
+      <AlertDialogOverlay>
+        <AlertDialogContent>
+          <AlertDialogHeader fontSize="lg" fontWeight="bold">
+            Write a name for the report
+          </AlertDialogHeader>
+
+          <AlertDialogBody>
+            <Input
+              type="text"
+              onChange={(e) => setName(e.target.value)}
+              value={name}
+            />
+          </AlertDialogBody>
+
+          <AlertDialogFooter>
+            <Button ref={cancelRef} onClick={onClose}>
+              Cancel
+            </Button>
+            <Button
+              variant="primaryRedBtn"
+              onClick={handleGenerateReport}
+              ml={3}
+            >
+              Generate Report
+            </Button>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialogOverlay>
+    </AlertDialog>
+  );
+}
+
+export const QueryListItem = ({ q }: Props) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
     <Fade in>
@@ -111,13 +180,23 @@ export const QueryListItem = ({ q }: Props) => {
           </GridItem>
           <GridItem>
             <Box>
-              <Button onClick={handleGenerateReport} variant="primaryRedBtn">
+              <Button
+                onClick={() => setIsModalOpen(true)}
+                variant="primaryRedBtn"
+              >
                 Generate Report
               </Button>
             </Box>
           </GridItem>
         </Grid>
       </Flex>
+      {isModalOpen && (
+        <NameAlertDialog
+          q={q}
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+        />
+      )}
     </Fade>
   );
 };

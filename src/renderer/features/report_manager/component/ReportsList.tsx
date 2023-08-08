@@ -5,6 +5,7 @@ import {
   Stack,
   Table,
   TableContainer,
+  Tag,
   Tbody,
   Td,
   Text,
@@ -13,6 +14,13 @@ import {
   Tr,
 } from '@chakra-ui/react';
 import { IReport } from '../types';
+import { StatusMap } from 'renderer/features/crawler_manager/types';
+
+const statusMap: StatusMap = {
+  0: { label: 'Generate Report', colorScheme: 'grey' },
+  1: { label: 'Generating Report', colorScheme: 'blue' },
+  2: { label: 'Report Generated', colorScheme: 'red' },
+};
 
 interface Props {
   reports: IReport[];
@@ -42,12 +50,20 @@ export const ReportList = ({ reports, handleViewReport }: Props) => {
                     <Td>{index + 1}</Td>
                     <Td>{item.name}</Td>
                     <Td>
-                      <Stack>
-                        <Text>{item.url_id}</Text>
-                        {/* <Text>{item.}</Text> */}
+                      <Stack width="400px">
+                        <Text>{item.url}</Text>
+                        <Text>{item.title}</Text>
                       </Stack>
                     </Td>
-                    <Td>{item.status}</Td>
+                    {/* <Td>{item.status}</Td> */}
+                    <Td>
+                      <Tag
+                        variant="outline"
+                        colorScheme={statusMap[item.status].colorScheme}
+                      >
+                        {statusMap[item.status].label}
+                      </Tag>
+                    </Td>
                     <Td>
                       <Button
                         onClick={() => handleViewReport(item.report)}

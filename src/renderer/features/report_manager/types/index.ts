@@ -4,5 +4,7 @@ export interface IReport {
   user_id: string;
   _id: string;
   name: string;
+  url: string;
+  title: string;
   status: number;
 }

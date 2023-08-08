@@ -11,7 +11,7 @@ import { FaFilter, FaSearch } from 'react-icons/fa';
 interface Props {
   query: string;
   queryChange: React.Dispatch<React.SetStateAction<string>>;
-  setTagModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setTagModalOpen?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const SearchBar = ({ query, queryChange, setTagModalOpen }: Props) => {
