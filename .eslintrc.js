@@ -16,6 +16,9 @@ module.exports = {
     'import/prefer-default-export': 'off',
     'react/function-component-definition': 'off',
     'react/require-default-props': 'off',
+    'no-underscore-dangle': 'off',
+    'no-return-await': 'off',
+    'no-lonely-if', 'off'
   },
   parserOptions: {
     ecmaVersion: 2020,

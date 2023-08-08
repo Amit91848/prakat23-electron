@@ -1,4 +1,4 @@
-import { Box, Spinner, Stack } from '@chakra-ui/react';
+import { Box, Flex, Spinner, Stack } from '@chakra-ui/react';
 import React from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { HelmetProvider } from 'react-helmet-async';
@@ -15,6 +15,7 @@ function ErrorFallback() {
       justifyContent="center"
       alignItems="center"
       color="red.500"
+      background="darkbg"
     >
       <h2 className="text-lg font-semibold">Ooops, something went wrong :( </h2>
       <button
@@ -36,14 +37,15 @@ function AppProvider({ children }: AppProviderProps) {
   return (
     <React.Suspense
       fallback={
-        <Box
+        <Flex
           minH="100vh"
           minW="100vw"
           justifyContent="center"
           alignItems="center"
+          background="darkbg"
         >
-          <Spinner size="xl" />
-        </Box>
+          <Spinner size="xl" color="red" />
+        </Flex>
       }
     >
       <ErrorBoundary FallbackComponent={ErrorFallback}>

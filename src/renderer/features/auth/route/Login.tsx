@@ -1,10 +1,14 @@
+/* eslint-disable camelcase */
 import { Stack, Input, Button, Box } from '@chakra-ui/react';
 import { Formik } from 'formik';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import ParticlesContainer from 'renderer/components/particles/particles';
+import storage from 'renderer/lib/storage';
 import Layout from '../component/Layout';
+import { loginWithEmailAndPassword } from '../api/login';
 
 export function LoginForm() {
+  const navigate = useNavigate();
   return (
     <Box justifyContent="center" alignItems="center">
       <ParticlesContainer />
@@ -14,16 +18,29 @@ export function LoginForm() {
             email: '',
             password: '',
           }}
-          onSubmit={(values) => {
-            // console.log(values);
-            alert(JSON.stringify(values));
+          onSubmit={async (values) => {
+            const { data } = await loginWithEmailAndPassword(values);
+            const { access_token, user_id } = data;
+            storage.setToken(access_token);
+            storage.setUser(user_id);
+
+            navigate('/app');
           }}
         >
-          {({ handleSubmit }) => (
+          {({ handleSubmit, handleChange }) => (
             <form onSubmit={handleSubmit} action="">
-              <Stack spacing="5">
-                <Input placeholder="Email" />
-                <Input placeholder="Password" />
+              <Stack color="blackAlpha.700" spacing="5">
+                <Input
+                  name="email"
+                  onChange={handleChange}
+                  placeholder="Email"
+                />
+                <Input
+                  name="password"
+                  onChange={handleChange}
+                  type="password"
+                  placeholder="Password"
+                />
                 <Button
                   type="submit"
                   justifySelf="end"

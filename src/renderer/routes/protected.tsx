@@ -1,4 +1,4 @@
-import { Button } from '@chakra-ui/react';
+import { Button, Stack } from '@chakra-ui/react';
 import { Link, Outlet } from 'react-router-dom';
 import { MainLayout } from 'renderer/components/Layout';
 import { lazyImport } from 'renderer/utils';
@@ -6,6 +6,16 @@ import { lazyImport } from 'renderer/utils';
 const { SearchRoutes } = lazyImport(
   () => import('renderer/features/search'),
   'SearchRoutes'
+);
+
+const { CrawlerManagerRoutes } = lazyImport(
+  () => import('renderer/features/crawler_manager'),
+  'CrawlerManagerRoutes'
+);
+
+const { ReportManagerRoutes } = lazyImport(
+  () => import('renderer/features/report_manager'),
+  'ReportManagerRoutes'
 );
 
 function App() {
@@ -21,12 +31,20 @@ function Dashboard() {
     <>
       <div className="main">
         Protected Routes
-        <Link to="/">
-          <Button> Back to Landing</Button>
-        </Link>{' '}
-        <Link to="/app/search/">
-          <Button> Search Page</Button>
-        </Link>{' '}
+        <Stack spacing="12">
+          <Link to="/">
+            <Button> Back to Landing</Button>
+          </Link>{' '}
+          <Link to="/app/search/">
+            <Button> Search Page</Button>
+          </Link>{' '}
+          <Link to="/app/report-manager">
+            <Button>Report Manager</Button>
+          </Link>
+          <Link to="/app/crawler">
+            <Button>Crawler Manager</Button>
+          </Link>
+        </Stack>
       </div>{' '}
     </>
   );
@@ -39,6 +57,8 @@ const protectedRoutes = [
     children: [
       { path: 'dashboard/', element: <Dashboard /> },
       { path: 'search/*', element: <SearchRoutes /> },
+      { path: 'crawler/*', element: <CrawlerManagerRoutes /> },
+      { path: 'report-manager/*', element: <ReportManagerRoutes /> },
     ],
   },
 ];
