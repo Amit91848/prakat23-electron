@@ -1,4 +1,4 @@
-import { Stack } from '@chakra-ui/react';
+import { Button, Divider, Flex, Input, Stack } from '@chakra-ui/react';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { Heading } from 'renderer/components/Heading';
@@ -42,6 +42,7 @@ export const BTCTrailPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [addressInfo, setAddressInfo] = useState<AddressInfo>();
   const [directLinks, setDirectLinks] = useState<DirectLinks>();
+  const [findAddress, setFindAddress] = useState('');
 
   const fetchBTCAddress = async () => {
     const response = await axios.get('http://localhost:8000/btc_address');
@@ -52,12 +53,33 @@ export const BTCTrailPage = () => {
     setIsModalOpen(false);
   };
 
+  const findBTCAddress = async (address: string) => {
+    const response = await axios.get<BTCAddress>(
+      `http://localhost:8000/btc_address/search?address=${address}`
+    );
+    setbtcTrail([response.data]);
+  };
+
   useEffect(() => {
     fetchBTCAddress();
   }, []);
   return (
     <Stack h="full" overflow="scroll">
       <Heading title="Bitcoin Trail" />
+      <Divider />
+
+      <Flex gap="4" padding="3">
+        <Input
+          value={findAddress}
+          onChange={(e) => setFindAddress(e.target.value)}
+          type="text"
+          placeholder="Enter BTC Address to search"
+        />
+
+        <Button onClick={() => findBTCAddress(findAddress)}>
+          Search Address
+        </Button>
+      </Flex>
 
       {btcTrail &&
         btcTrail.map((btc) => (

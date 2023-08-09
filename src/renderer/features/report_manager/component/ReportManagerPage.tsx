@@ -15,15 +15,17 @@ export const ReportManagerPage = () => {
   });
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [reportBody, setReportBody] = useState('');
+  const [modalReportId, setModalReportId] = useState('');
   // const [reports, setReports] = useState<IReport[]>([]);
 
   const handleModalClose = () => {
     setIsModalOpen(false);
   };
 
-  const handleViewOpen = (report: string) => {
+  const handleViewOpen = (report: string, report_id: string) => {
     setIsModalOpen(true);
     setReportBody(report);
+    setModalReportId(report_id);
   };
 
   if (isLoading)
@@ -54,6 +56,7 @@ export const ReportManagerPage = () => {
       <ReportList reports={reports} handleViewReport={handleViewOpen} />
       {isModalOpen && (
         <ReportViewer
+          report_id={modalReportId}
           report={reportBody}
           isOpen={isModalOpen}
           onClose={handleModalClose}

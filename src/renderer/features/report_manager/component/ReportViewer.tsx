@@ -7,16 +7,22 @@ import {
   ModalBody,
   ModalFooter,
   Button,
+  useToast,
 } from '@chakra-ui/react';
+import axios from 'axios';
 import jsPDF from 'jspdf';
+import { useState } from 'react';
 
 interface Props {
   isOpen: boolean;
   onClose: VoidFunction;
   report: string;
+  report_id: string;
 }
 
-export const ReportViewer = ({ isOpen, onClose, report }: Props) => {
+export const ReportViewer = ({ isOpen, onClose, report, report_id }: Props) => {
+  const [isMailLoading, setIsMailLoading] = useState(false);
+  const toast = useToast();
   const downloadPdf = () => {
     const doc = new jsPDF();
 
@@ -42,6 +48,25 @@ export const ReportViewer = ({ isOpen, onClose, report }: Props) => {
     doc.save(`report_${new Date().getTime()}`);
   };
 
+  const send_email = async () => {
+    setIsMailLoading(true);
+    const response = await axios.get(
+      `http://localhost:8000/mail/send/?report_id=${report_id}`
+    );
+
+    if (response.status === 200) {
+      toast({
+        title: 'Report has been sent.',
+        description: "We've sent email to your address",
+        status: 'success',
+        duration: 3000,
+        isClosable: true,
+        position: 'top-right',
+      });
+    }
+    setIsMailLoading(false);
+  };
+
   return (
     <Modal size="4xl" onClose={onClose} isOpen={isOpen} isCentered>
       <ModalOverlay />
@@ -60,8 +85,21 @@ export const ReportViewer = ({ isOpen, onClose, report }: Props) => {
           <Button variant="primary" mr={3} onClick={onClose}>
             Close
           </Button>
-          <Button onClick={downloadPdf} type="submit" variant="primaryRedBtn">
+          <Button
+            mr="4"
+            onClick={downloadPdf}
+            type="submit"
+            variant="primaryRedBtn"
+          >
             Download Report
+          </Button>
+          <Button
+            isDisabled={isMailLoading}
+            onClick={send_email}
+            type="submit"
+            variant="primaryRedBtn"
+          >
+            Send Email
           </Button>
         </ModalFooter>
       </ModalContent>

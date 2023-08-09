@@ -66,6 +66,7 @@ const protectedRoutes = [
       { path: 'bitcoin-trails', element: <BTCTrailRoute /> },
       { path: 'tor-stats', element: <TorStatsRoute /> },
       { path: 'db-stats', element: <DBStatsRoute /> },
+      { path: 'data-breach-analysis', element: <DataBreachAnalysisRoutes /> },
     ],
   },
 ];

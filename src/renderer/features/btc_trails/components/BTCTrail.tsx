@@ -78,7 +78,7 @@ export const BTCTrail = ({
             </Flex>
           </AccordionButton>
         </h2>
-        <AccordionPanel pb={4}>
+        <AccordionPanel pl="4" pb={4}>
           {btc.urls.map((url) => (
             <Text>{url}</Text>
           ))}

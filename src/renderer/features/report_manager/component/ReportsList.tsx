@@ -24,7 +24,7 @@ const statusMap: StatusMap = {
 
 interface Props {
   reports: IReport[];
-  handleViewReport: (report: string) => void;
+  handleViewReport: (report: string, report_id: string) => void;
 }
 
 export const ReportList = ({ reports, handleViewReport }: Props) => {
@@ -66,7 +66,7 @@ export const ReportList = ({ reports, handleViewReport }: Props) => {
                     </Td>
                     <Td>
                       <Button
-                        onClick={() => handleViewReport(item.report)}
+                        onClick={() => handleViewReport(item.report, item._id)}
                         variant="primaryRedBtn"
                         isDisabled={item.status < 2}
                       >

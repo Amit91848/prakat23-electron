@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import { Stack, Input, Button, Box } from '@chakra-ui/react';
+import { Stack, Input, Button, Box, useToast } from '@chakra-ui/react';
 import { Formik } from 'formik';
 import { Link, useNavigate } from 'react-router-dom';
 import ParticlesContainer from 'renderer/components/particles/particles';
@@ -9,6 +9,7 @@ import { loginWithEmailAndPassword } from '../api/login';
 
 export function LoginForm() {
   const navigate = useNavigate();
+  const toast = useToast();
   return (
     <Box justifyContent="center" alignItems="center">
       <ParticlesContainer />
@@ -19,8 +20,18 @@ export function LoginForm() {
             password: '',
           }}
           onSubmit={async (values) => {
-            const { data } = await loginWithEmailAndPassword(values);
-            const { access_token, user_id } = data;
+            const response = await loginWithEmailAndPassword(values);
+            if (response.status !== 200) {
+              toast({
+                title: 'Wrong Credentials',
+                description: 'Incorrect credentials.',
+                status: 'error',
+                duration: 3000,
+                isClosable: true,
+                position: 'top-right',
+              });
+            }
+            const { access_token, user_id } = response.data;
             storage.setToken(access_token);
             storage.setUser(user_id);
 
