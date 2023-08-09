@@ -50,7 +50,7 @@ export const ReportList = ({ reports, handleViewReport }: Props) => {
                     <Td>{index + 1}</Td>
                     <Td>{item.name}</Td>
                     <Td>
-                      <Stack width="400px">
+                      <Stack maxWidth="450px" overflow="clip">
                         <Text>{item.url}</Text>
                         <Text>{item.title}</Text>
                       </Stack>
@@ -68,6 +68,7 @@ export const ReportList = ({ reports, handleViewReport }: Props) => {
                       <Button
                         onClick={() => handleViewReport(item.report)}
                         variant="primaryRedBtn"
+                        isDisabled={item.status < 2}
                       >
                         View Report
                       </Button>

@@ -10,46 +10,89 @@ import { Box, Divider, Stack } from '@chakra-ui/react';
 import { SearchBar } from 'renderer/components/Searchbar/Searchbar';
 import { AddTagsFilterModal } from 'renderer/components/Searchbar/AddTagsFilterModal';
 import { Tags } from './Tag/Tags';
+import { useQuery, useQueryClient } from 'react-query';
 
 export const SearchPage = () => {
+  // const [searchQuery, setSearchQuery] = useState<string>('');
+  // const pageCount = 20;
+  // const [page, setPage] = useState(1);
+
+  // const [queryResults, setQueryResults] = useState<SearchPageResponse[]>([]);
+
+  // const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [tags, setTags] = useState<string[]>([]);
+
+  // const handleCloseModal = () => {
+  //   setIsModalOpen(false);
+  // };
+
+  // const fetchSearchResults = async (q: string, p: number, tag: string[]) => {
+  //   const response = await axios.get(
+  //     `http://localhost:8000/search/?q=${q}&page=${p}&pageCount=${pageCount}&tags=${tags.toString()}`
+  //   );
+
+  //   setQueryResults(response.data);
+  // };
+
+  // const handlePageChange = (newPage: number) => {
+  //   setPage(newPage);
+  // };
+
+  // useEffect(() => {
+  //   if (searchQuery !== '') {
+  //     setPage(1); // Reset the page to 1 when the search query changes
+  //     fetchSearchResults(searchQuery, 1, tags); // Fetch results with the new query and page 1
+  //   }
+  // }, [searchQuery, tags]);
+
+  // useEffect(() => {
+  //   if (searchQuery !== '') {
+  //     fetchSearchResults(searchQuery, page, tags); // Fetch results with the updated page value
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [page, tags]);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const pageCount = 20;
   const [page, setPage] = useState(1);
 
-  const [queryResults, setQueryResults] = useState<SearchPageResponse[]>([]);
-
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [tags, setTags] = useState<string[]>([]);
+
+  const queryClient = useQueryClient();
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
 
-  const fetchSearchResults = async (q: string, p: number, tag: string[]) => {
+  const fetchSearchResults = async ({ queryKey }: any) => {
+    const [_key, { q, p, tags }] = queryKey;
     const response = await axios.get(
       `http://localhost:8000/search/?q=${q}&page=${p}&pageCount=${pageCount}&tags=${tags.toString()}`
     );
-
-    setQueryResults(response.data);
+    return response.data;
   };
+
+  const { data: queryResults } = useQuery(
+    ['search', { q: searchQuery, p: page, tags }],
+    fetchSearchResults,
+    {
+      refetchInterval: 3000,
+      enabled: searchQuery !== '', // Only enable the query when there's a search query
+    }
+  );
 
   const handlePageChange = (newPage: number) => {
     setPage(newPage);
   };
 
+  // Whenever the page or tags change, invalidate the query to trigger a refetch
   useEffect(() => {
     if (searchQuery !== '') {
-      setPage(1); // Reset the page to 1 when the search query changes
-      fetchSearchResults(searchQuery, 1, tags); // Fetch results with the new query and page 1
+      queryClient.invalidateQueries([
+        'search',
+        { q: searchQuery, p: page, tags },
+      ]);
     }
-  }, [searchQuery, tags]);
-
-  useEffect(() => {
-    if (searchQuery !== '') {
-      fetchSearchResults(searchQuery, page, tags); // Fetch results with the updated page value
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page, tags]);
+  }, [page, tags, searchQuery, queryClient]);
 
   return (
     <Stack h="full">

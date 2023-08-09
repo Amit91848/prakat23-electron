@@ -15,6 +15,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { FiLogOut } from 'react-icons/fi';
 import { GiLongLeggedSpider } from 'react-icons/gi';
 import { HiOutlineDocumentDuplicate } from 'react-icons/hi';
+import { BsDatabaseFillX } from 'react-icons/bs';
 import { FaBitcoin } from 'react-icons/fa';
 import storage from 'renderer/lib/storage';
 import { MoonIcon, SunIcon } from '@chakra-ui/icons';
@@ -96,8 +97,13 @@ function Sidebar() {
         link="/app/bitcoin-trails"
         text="BTC Trails"
       />
+      <SidebarButton
+        ButtonIcon={BsDatabaseFillX}
+        link="/app/data-breach-analysis"
+        text="Data Breach Analysis"
+      />
 
-      <Spacer />
+      {/* <Spacer /> */}
       <SidebarButton
         ButtonIcon={FiLogOut}
         mt="auto"

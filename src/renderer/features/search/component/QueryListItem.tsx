@@ -26,6 +26,7 @@ import {
 import { SearchPageResponse } from '../types';
 import { useRef, useState } from 'react';
 import { useToast } from '@chakra-ui/react';
+import { StatusMap } from 'renderer/features/crawler_manager/types';
 
 interface Props {
   q: SearchPageResponse;
@@ -36,6 +37,12 @@ interface AlertNameProps {
   onClose: VoidFunction;
   q: SearchPageResponse;
 }
+
+const statusMap = {
+  0: { label: 'Generate Report' },
+  1: { label: 'Generating Report' },
+  2: { label: 'Report Generated' },
+};
 
 function NameAlertDialog({ isOpen, onClose, q }: AlertNameProps) {
   const [name, setName] = useState('');
@@ -177,7 +184,8 @@ export const QueryListItem = ({ q }: Props) => {
                 onClick={() => setIsModalOpen(true)}
                 variant="primaryRedBtn"
               >
-                Generate Report
+                {/* Generate Report */}
+                {statusMap[q.report_generated].label}
               </Button>
             </Box>
           </GridItem>

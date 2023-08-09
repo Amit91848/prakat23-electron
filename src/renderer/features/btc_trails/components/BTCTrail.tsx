@@ -10,7 +10,7 @@ import {
   AccordionPanel,
   Text,
 } from '@chakra-ui/react';
-import { AddressInfo, BTCAddress } from './BTCTrailPage';
+import { AddressInfo, BTCAddress, DirectLinks } from './BTCTrailPage';
 import axios from 'axios';
 import { useState } from 'react';
 
@@ -18,10 +18,27 @@ interface Props {
   btc: BTCAddress;
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setAddressInfo: React.Dispatch<React.SetStateAction<AddressInfo | undefined>>;
+  setDirectlinks: React.Dispatch<React.SetStateAction<DirectLinks | undefined>>;
 }
 
-export const BTCTrail = ({ btc, setIsModalOpen, setAddressInfo }: Props) => {
+export const BTCTrail = ({
+  btc,
+  setIsModalOpen,
+  setAddressInfo,
+  setDirectlinks,
+}: Props) => {
   const [isLoading, setIsLoading] = useState(false);
+  const [isDirectLinkLoading, setIsDirectLinkLoading] = useState(false);
+
+  const fetchDirectLinks = async (address: string) => {
+    setIsDirectLinkLoading(true);
+    const response = await axios.get(
+      `http://localhost:8000/btc_address/get_direct_links?address=${address}`
+    );
+    setIsDirectLinkLoading(false);
+    setDirectlinks(response.data);
+    setIsModalOpen(true);
+  };
 
   const fetchAddressInfo = async (address: string) => {
     setIsLoading(true);
@@ -51,7 +68,13 @@ export const BTCTrail = ({ btc, setIsModalOpen, setAddressInfo }: Props) => {
               >
                 View data
               </Button>
-              <Button variant="primaryRedBtn">Vizualize Data</Button>
+              <Button
+                onClick={() => fetchDirectLinks(btc.btc_entity)}
+                isLoading={isDirectLinkLoading}
+                variant="primaryRedBtn"
+              >
+                Get Direct Link
+              </Button>
             </Flex>
           </AccordionButton>
         </h2>

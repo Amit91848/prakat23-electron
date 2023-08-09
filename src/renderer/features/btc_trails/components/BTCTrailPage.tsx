@@ -1,16 +1,4 @@
-import {
-  Accordion,
-  AccordionButton,
-  AccordionIcon,
-  AccordionItem,
-  AccordionPanel,
-  Text,
-  Box,
-  Stack,
-  Flex,
-  Spacer,
-  Button,
-} from '@chakra-ui/react';
+import { Stack } from '@chakra-ui/react';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { Heading } from 'renderer/components/Heading';
@@ -44,10 +32,16 @@ export interface OutgoingTransactions {
   timestamp: string;
 }
 
+export interface DirectLinks {
+  address: string;
+  amount: number;
+}
+
 export const BTCTrailPage = () => {
   const [btcTrail, setbtcTrail] = useState<BTCAddress[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [addressInfo, setAddressInfo] = useState<AddressInfo>();
+  const [directLinks, setDirectLinks] = useState<DirectLinks>();
 
   const fetchBTCAddress = async () => {
     const response = await axios.get('http://localhost:8000/btc_address');
@@ -72,11 +66,23 @@ export const BTCTrailPage = () => {
             setIsModalOpen={setIsModalOpen}
             key={btc.btc_entity}
             setAddressInfo={setAddressInfo}
+            setDirectlinks={setDirectLinks}
           />
         ))}
       {isModalOpen && addressInfo && (
         <ViewDataModal
+          type="address"
+          title="Information about the address"
           information={addressInfo}
+          isOpen={isModalOpen}
+          onClose={handleModalClose}
+        />
+      )}
+      {isModalOpen && directLinks && (
+        <ViewDataModal
+          type="links"
+          title="Direct links to the address"
+          information={directLinks}
           isOpen={isModalOpen}
           onClose={handleModalClose}
         />
