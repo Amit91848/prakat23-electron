@@ -12,6 +12,7 @@ import {
 import axios from 'axios';
 import jsPDF from 'jspdf';
 import { useState } from 'react';
+import { useLocales } from 'locales';
 
 interface Props {
   isOpen: boolean;
@@ -21,8 +22,10 @@ interface Props {
 }
 
 export const ReportViewer = ({ isOpen, onClose, report, report_id }: Props) => {
+  // export const ReportViewer = ({ isOpen, onClose, report }: Props) => {
   const [isMailLoading, setIsMailLoading] = useState(false);
   const toast = useToast();
+  const { t } = useLocales();
   const downloadPdf = () => {
     const doc = new jsPDF();
 
@@ -71,7 +74,7 @@ export const ReportViewer = ({ isOpen, onClose, report, report_id }: Props) => {
     <Modal size="4xl" onClose={onClose} isOpen={isOpen} isCentered>
       <ModalOverlay />
       <ModalContent p="5" color="textHeading">
-        <ModalHeader> Report Generated</ModalHeader>
+        <ModalHeader>{t('generated_report')}</ModalHeader>
         <ModalCloseButton />
         <ModalBody maxH="calc(100vh - 260px)" overflowY="scroll" p="4">
           {report.split('\n').map((item) => (
@@ -83,15 +86,15 @@ export const ReportViewer = ({ isOpen, onClose, report, report_id }: Props) => {
         </ModalBody>
         <ModalFooter>
           <Button variant="primary" mr={3} onClick={onClose}>
-            Close
+            {t('close')}
           </Button>
           <Button
-            mr="4"
             onClick={downloadPdf}
+            mr={3}
             type="submit"
             variant="primaryRedBtn"
           >
-            Download Report
+            {t('download_report')}
           </Button>
           <Button
             isDisabled={isMailLoading}

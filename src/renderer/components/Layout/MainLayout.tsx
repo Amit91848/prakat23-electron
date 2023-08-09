@@ -4,14 +4,13 @@ import { IconType } from 'react-icons';
 import {
   Button,
   ButtonProps,
-  HStack,
   Text,
-  Spacer,
   IconButton,
   useColorMode,
+  Select,
 } from '@chakra-ui/react';
 import { ReactNode } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { FiLogOut } from 'react-icons/fi';
 import { GiLongLeggedSpider } from 'react-icons/gi';
 import { HiOutlineDocumentDuplicate } from 'react-icons/hi';
@@ -21,6 +20,8 @@ import { AiFillPieChart } from 'react-icons/ai';
 import { RiSpyFill } from 'react-icons/ri';
 import storage from 'renderer/lib/storage';
 import { MoonIcon, SunIcon } from '@chakra-ui/icons';
+import { useLocales } from 'locales';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
   text: string;
@@ -69,50 +70,59 @@ function SidebarButton({
 
 function Sidebar() {
   const { colorMode, toggleColorMode } = useColorMode();
+  const { t, onChangeLang } = useLocales();
 
   return (
     <Stack spacing="0" minW="16rem" borderRight="2px #2E2F34 solid" w="64">
-      {/* <Stack> */}
       <IconButton
         icon={colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
         onClick={toggleColorMode}
         aria-label="Toggle Color Mode"
       />
-      {/* </Stack> */}
+      <Select
+        className="translation"
+        onChange={(e) => {
+          console.log(e.target.value);
+          onChangeLang(e.target.value);
+        }}
+      >
+        <option value="en">English</option>
+        <option value="hi">हिंदी</option>
+      </Select>
       <SidebarButton
         ButtonIcon={FaSearchengin}
         link="/app/search"
-        text="Search"
+        text={t('search')}
       />
       <SidebarButton
         ButtonIcon={HiOutlineDocumentDuplicate}
         link="/app/report-manager"
-        text="Report"
+        text={t('view_reports')}
       />
       <SidebarButton
         ButtonIcon={GiLongLeggedSpider}
         link="/app/crawler"
-        text="Crawler Manager"
+        text={t('crawler_manager')}
       />
       <SidebarButton
         ButtonIcon={FaBitcoin}
         link="/app/bitcoin-trails"
-        text="BTC Trails"
+        text={t('btc_trails')}
       />
       <SidebarButton
         ButtonIcon={AiFillPieChart}
         link="/app/db-stats"
-        text="Database Statistics"
+        text={t('db_stats')}
       />
       <SidebarButton
         ButtonIcon={RiSpyFill}
         link="/app/tor-stats"
-        text="Tor Statistics"
+        text={t('tor_stats')}
       />
       <SidebarButton
         ButtonIcon={BsDatabaseFillX}
         link="/app/data-breach-analysis"
-        text="Data Breach Analysis"
+        text={t('db_breach_analysis')}
       />
 
       {/* <Spacer /> */}
@@ -120,7 +130,7 @@ function Sidebar() {
         ButtonIcon={FiLogOut}
         mt="auto"
         link="/auth/login"
-        text="Logout"
+        text={t('logout')}
       />
     </Stack>
   );

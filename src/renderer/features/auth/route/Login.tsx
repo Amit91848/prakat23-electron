@@ -6,10 +6,12 @@ import ParticlesContainer from 'renderer/components/particles/particles';
 import storage from 'renderer/lib/storage';
 import Layout from '../component/Layout';
 import { loginWithEmailAndPassword } from '../api/login';
+import { useLocales } from 'locales';
 
 export function LoginForm() {
   const navigate = useNavigate();
   const toast = useToast();
+  const { t } = useLocales();
   return (
     <Box justifyContent="center" alignItems="center">
       <ParticlesContainer />
@@ -35,22 +37,22 @@ export function LoginForm() {
             storage.setToken(access_token);
             storage.setUser(user_id);
 
-            navigate('/app');
+            navigate('/app/search');
           }}
         >
           {({ handleSubmit, handleChange }) => (
             <form onSubmit={handleSubmit} action="">
-              <Stack color="blackAlpha.700" spacing="5">
+              <Stack color="white" spacing="5">
                 <Input
                   name="email"
                   onChange={handleChange}
-                  placeholder="Email"
+                  placeholder={t('email')}
                 />
                 <Input
                   name="password"
                   onChange={handleChange}
                   type="password"
-                  placeholder="Password"
+                  placeholder={t('password')}
                 />
                 <Button
                   type="submit"
@@ -64,9 +66,6 @@ export function LoginForm() {
                 >
                   Log In
                 </Button>
-                <Link to="/">
-                  <Button type="button">Landing Page</Button>
-                </Link>
               </Stack>
             </form>
           )}

@@ -11,8 +11,10 @@ import { SearchBar } from 'renderer/components/Searchbar/Searchbar';
 import { AddTagsFilterModal } from 'renderer/components/Searchbar/AddTagsFilterModal';
 import { Tags } from './Tag/Tags';
 import { useQuery, useQueryClient } from 'react-query';
+import { useLocales } from 'locales';
 
 export const SearchPage = () => {
+  const { t } = useLocales();
   // const [searchQuery, setSearchQuery] = useState<string>('');
   // const pageCount = 20;
   // const [page, setPage] = useState(1);
@@ -96,7 +98,7 @@ export const SearchPage = () => {
 
   return (
     <Stack h="full">
-      <Heading title="Search" />
+      <Heading title={t('search')} />
       <Box flex="1" overflow="hidden">
         <Stack h="full" spacing="0">
           <SearchBar

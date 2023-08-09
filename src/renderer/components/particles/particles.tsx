@@ -62,7 +62,7 @@ const particleParams: RecursivePartial<IOptions> = {
         mode: 'link',
       },
       onclick: {
-        enable: true,
+        enable: false,
         mode: 'push',
       },
     },

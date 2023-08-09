@@ -5,10 +5,12 @@
 .main {
   color: white;
   height: 100vh;
-  background: linear-gradient(200.96deg,
-      #fedc2a -29.09%,
-      #dd5789 51.77%,
-      #7a2c9e 129.35%);
+  background: linear-gradient(
+    200.96deg,
+    #fedc2a -29.09%,
+    #dd5789 51.77%,
+    #7a2c9e 129.35%
+  );
   font-family: sans-serif;
   overflow-y: hidden;
   display: flex;
@@ -18,7 +20,7 @@
 
 .react-paginate {
   display: flex;
-  width: 100%
+  width: 100%;
 }
 
 button {
@@ -41,9 +43,9 @@ button:hover {
 }
 
 .glass-bg {
-  background: rgba(255, 255, 255, 0.11);
+  background: rgba(255, 255, 255, 0);
   border-radius: 16px;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(1.2px);
   -webkit-backdrop-filter: blur(1.2px);
   border: 1px solid rgba(255, 255, 255, 0.3);

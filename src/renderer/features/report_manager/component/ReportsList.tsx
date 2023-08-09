@@ -15,12 +15,7 @@ import {
 } from '@chakra-ui/react';
 import { IReport } from '../types';
 import { StatusMap } from 'renderer/features/crawler_manager/types';
-
-const statusMap: StatusMap = {
-  0: { label: 'Generate Report', colorScheme: 'grey' },
-  1: { label: 'Generating Report', colorScheme: 'blue' },
-  2: { label: 'Report Generated', colorScheme: 'red' },
-};
+import { useLocales } from 'locales';
 
 interface Props {
   reports: IReport[];
@@ -28,6 +23,12 @@ interface Props {
 }
 
 export const ReportList = ({ reports, handleViewReport }: Props) => {
+  const { t } = useLocales();
+  const statusMap: StatusMap = {
+    0: { label: t('generate_report'), colorScheme: 'grey' },
+    1: { label: t('generating_report'), colorScheme: 'blue' },
+    2: { label: t('generated_report'), colorScheme: 'red' },
+  };
   return (
     <Box mt="4" flex="1" overflowY="auto">
       <ScaleFade initialScale={0.9} in>
@@ -35,10 +36,10 @@ export const ReportList = ({ reports, handleViewReport }: Props) => {
           <Table size="lg" variant="simple">
             <Thead>
               <Tr>
-                <Th>S. No</Th>
-                <Th>Name</Th>
-                <Th>Information</Th>
-                <Th>Status</Th>
+                <Th>{t('s_no')}</Th>
+                <Th>{t('name')}</Th>
+                <Th>{t('information')}</Th>
+                <Th>{t('status')}</Th>
                 {/* <Th>View Report</Th> */}
                 <Th />
               </Tr>
@@ -70,7 +71,7 @@ export const ReportList = ({ reports, handleViewReport }: Props) => {
                         variant="primaryRedBtn"
                         isDisabled={item.status < 2}
                       >
-                        View Report
+                        {t('view_report')}
                       </Button>
                     </Td>
                   </Tr>

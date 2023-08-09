@@ -4,7 +4,7 @@ export interface SearchPageResponse {
   title: string;
   score: number;
   tags: string[];
-  report_generated: number;
+  generated_report: number;
 }
 
 export interface ResponseBody<T> {

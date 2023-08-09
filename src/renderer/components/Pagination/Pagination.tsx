@@ -1,5 +1,6 @@
 import { Box, Flex, Button } from '@chakra-ui/react';
 import { ChevronLeftIcon, ChevronRightIcon } from '@chakra-ui/icons';
+import { useLocales } from 'locales';
 
 type PaginationProps = {
   currentPage: number;
@@ -12,6 +13,7 @@ const Pagination = ({
   totalPages,
   onPageChange,
 }: PaginationProps) => {
+  const { t } = useLocales();
   const handlePrevPage = () => {
     onPageChange(currentPage - 1);
   };
@@ -30,7 +32,7 @@ const Pagination = ({
         leftIcon={<ChevronLeftIcon />}
         colorScheme="red"
       >
-        Prev
+        {t('previous')}
       </Button>
 
       <Box mx={2}>{currentPage}</Box>
@@ -43,7 +45,7 @@ const Pagination = ({
         rightIcon={<ChevronRightIcon />}
         colorScheme="red"
       >
-        Next
+        {t('next')}
       </Button>
     </Flex>
   );

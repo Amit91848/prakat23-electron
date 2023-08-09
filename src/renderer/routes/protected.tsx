@@ -59,7 +59,7 @@ const protectedRoutes = [
     path: '/app',
     element: <App />,
     children: [
-      { path: 'dashboard/', element: <Dashboard /> },
+      // { path: 'dashboard/', element: <Dashboard /> },
       { path: 'search/*', element: <SearchRoutes /> },
       { path: 'crawler/*', element: <CrawlerManagerRoutes /> },
       { path: 'report-manager/*', element: <ReportManagerRoutes /> },

@@ -22,6 +22,7 @@ import * as Yup from 'yup';
 
 import { FaSpider } from 'react-icons/fa';
 import { useCreateDiscussion } from '../api/createCrawler';
+import { useLocales } from 'locales';
 
 interface Props {
   isOpen: boolean;
@@ -30,6 +31,7 @@ interface Props {
 
 export const AddCrawlerModal = ({ isOpen, onClose }: Props) => {
   const createCrawlerMutation = useCreateDiscussion();
+  const { t } = useLocales();
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
@@ -61,7 +63,7 @@ export const AddCrawlerModal = ({ isOpen, onClose }: Props) => {
                       type="url"
                       // value={props.values.data.url}
                       value={props.values.url}
-                      placeholder="Enter URL that you want to crawl"
+                      placeholder={t('enter_url')}
                     />
                     <ErrorMessage name="url" />
                   </InputGroup>
@@ -100,14 +102,16 @@ export const AddCrawlerModal = ({ isOpen, onClose }: Props) => {
                 </Stack>
                 <Flex mt="9" justifyContent="end">
                   <Button variant="primary" mr={3} onClick={onClose}>
-                    Close
+                    {t('close')}
                   </Button>
                   <Button
                     onClick={props.handleSubmit}
                     type="submit"
                     variant="primaryRedBtn"
                   >
-                    Start Crawling
+                    {t('start_crawling')}
+                    {/* {t('sameDomain')} */}
+                    {/* {t('maximumLinks')} */}
                   </Button>
                 </Flex>
               </form>

@@ -7,8 +7,10 @@ import { IReport } from '../types';
 import { ReportViewer } from './ReportViewer';
 import axios from 'axios';
 import { useReports } from '../api/getReports';
+import { useLocales } from 'locales';
 
 export const ReportManagerPage = () => {
+  const { t } = useLocales();
   const [reportQuery, setReportQuery] = useState('');
   const { isLoading, data: reports } = useReports({
     config: { refetchInterval: 2000 },
@@ -49,7 +51,7 @@ export const ReportManagerPage = () => {
 
   return (
     <Stack h="full" spacing="2">
-      <Heading title="Report Manager" />
+      <Heading title={t('report_manager')} />
       <Divider />
 
       {/* <SearchBar query={reportQuery} queryChange={setReportQuery} /> */}

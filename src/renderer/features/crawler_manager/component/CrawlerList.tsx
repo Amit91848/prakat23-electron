@@ -13,7 +13,6 @@ import {
   Fade,
   ScaleFade,
 } from '@chakra-ui/react';
-// import { ICrawlerListItem } from '../types';
 import { StatusMap } from '../types';
 import { useCrawlers } from '../api/getCrawlers';
 

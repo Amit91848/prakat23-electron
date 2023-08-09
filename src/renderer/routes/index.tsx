@@ -6,16 +6,20 @@ import storage from 'renderer/lib/storage';
 
 import protectedRoutes from './protected';
 import publicRoutes from './public';
+import Login from 'renderer/features/auth/route/Login';
+import { useLocales } from 'locales';
 
 function Landing() {
+  const { t } = useLocales();
+
   return (
     <div className="main">
       Landing
       <Link to="/auth/login">
-        <Button type="button">Login</Button>
+        <Button type="button">{t('login')}</Button>
       </Link>
       <Link to="/app/dashboard">
-        <Button type="button">Dashboard</Button>
+        <Button type="button">{t('dashboard')}</Button>
       </Link>
     </div>
   );
@@ -28,7 +32,7 @@ function AppRoutes() {
   const commonRoutes = [
     {
       path: '/',
-      element: <Landing />,
+      element: <Login />,
     },
   ];
   const auth = storage.getToken() && storage.getUser();

@@ -6,15 +6,17 @@ import {
   InputGroup,
   InputLeftElement,
 } from '@chakra-ui/react';
+import { useLocales } from 'locales';
 import { FaFilter, FaSearch } from 'react-icons/fa';
 
 interface Props {
   query: string;
   queryChange: React.Dispatch<React.SetStateAction<string>>;
-  setTagModalOpen?: React.Dispatch<React.SetStateAction<boolean>>;
+  setTagModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const SearchBar = ({ query, queryChange, setTagModalOpen }: Props) => {
+  const { t } = useLocales();
   console.log(query);
   return (
     <>
@@ -27,7 +29,7 @@ export const SearchBar = ({ query, queryChange, setTagModalOpen }: Props) => {
             }}
             variant="search"
             type="text"
-            placeholder="Enter a search query"
+            placeholder={t('enter_search_query')}
             _placeholder={{ color: '#A0AEC0' }}
           />
           <InputLeftElement>

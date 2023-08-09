@@ -23,6 +23,7 @@ import {
   Flex,
 } from '@chakra-ui/react';
 import { AddressInfo, DirectLinks } from './BTCTrailPage';
+import { useLocales } from 'locales';
 
 interface Props {
   isOpen: boolean;
@@ -39,6 +40,7 @@ export const ViewDataModal = ({
   title,
   type,
 }: Props) => {
+  const { t } = useLocales();
   return (
     <Modal isCentered size="6xl" isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
@@ -168,7 +170,7 @@ export const ViewDataModal = ({
 
         <ModalFooter>
           <Button variant="primary" mr={3} onClick={onClose}>
-            Close
+            {t('close')}
           </Button>
           {/* <Button variant="ghost">Secondary Action</Button> */}
         </ModalFooter>

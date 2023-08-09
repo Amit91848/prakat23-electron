@@ -26,7 +26,7 @@ import {
 import { SearchPageResponse } from '../types';
 import { useRef, useState } from 'react';
 import { useToast } from '@chakra-ui/react';
-import { StatusMap } from 'renderer/features/crawler_manager/types';
+import { useLocales } from 'locales';
 
 interface Props {
   q: SearchPageResponse;
@@ -38,13 +38,8 @@ interface AlertNameProps {
   q: SearchPageResponse;
 }
 
-const statusMap = {
-  0: { label: 'Generate Report' },
-  1: { label: 'Generating Report' },
-  2: { label: 'Report Generated' },
-};
-
 function NameAlertDialog({ isOpen, onClose, q }: AlertNameProps) {
+  const { t } = useLocales();
   const [name, setName] = useState('');
   const toast = useToast();
   const handleGenerateReport = async () => {
@@ -53,6 +48,12 @@ function NameAlertDialog({ isOpen, onClose, q }: AlertNameProps) {
       obj_id: q.id,
       name: name,
     });
+
+    const statusMap = {
+      0: { label: t('generate_report') },
+      1: { label: t('generating_report') },
+      2: { label: t('generated_report') },
+    };
 
     if (response.status === 200) {
       onClose();
@@ -89,14 +90,14 @@ function NameAlertDialog({ isOpen, onClose, q }: AlertNameProps) {
 
           <AlertDialogFooter>
             <Button ref={cancelRef} onClick={onClose}>
-              Cancel
+              {t('cancel')}
             </Button>
             <Button
               variant="primaryRedBtn"
               onClick={handleGenerateReport}
               ml={3}
             >
-              Generate Report
+              {t('generate_report')}
             </Button>
           </AlertDialogFooter>
         </AlertDialogContent>
@@ -106,6 +107,7 @@ function NameAlertDialog({ isOpen, onClose, q }: AlertNameProps) {
 }
 
 export const QueryListItem = ({ q }: Props) => {
+  const { t } = useLocales();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
@@ -184,8 +186,9 @@ export const QueryListItem = ({ q }: Props) => {
                 onClick={() => setIsModalOpen(true)}
                 variant="primaryRedBtn"
               >
+                {t('generateReport')}
                 {/* Generate Report */}
-                {statusMap[q.report_generated].label}
+                {statusMap[q.generated_report].label}
               </Button>
             </Box>
           </GridItem>

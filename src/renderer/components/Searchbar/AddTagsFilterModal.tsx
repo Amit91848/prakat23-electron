@@ -13,6 +13,7 @@ import {
   Select,
   VStack,
 } from '@chakra-ui/react';
+import { useLocales } from 'locales';
 import { useState } from 'react';
 
 interface Props {
@@ -60,6 +61,7 @@ export const AddTagsFilterModal = ({
   onClose,
   onAddTagsFilter,
 }: Props) => {
+  const { t } = useLocales();
   // const [tags, setTags] = useState<string[]>([]);
   const [tags, setTags] = useState<string[]>([]);
 
@@ -110,7 +112,7 @@ export const AddTagsFilterModal = ({
                 onClose();
               }}
             >
-              Search
+              {t('search')}
             </Button>
           </Flex>
         </ModalBody>
