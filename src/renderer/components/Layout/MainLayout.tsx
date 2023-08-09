@@ -17,6 +17,8 @@ import { GiLongLeggedSpider } from 'react-icons/gi';
 import { HiOutlineDocumentDuplicate } from 'react-icons/hi';
 import { BsDatabaseFillX } from 'react-icons/bs';
 import { FaBitcoin } from 'react-icons/fa';
+import { AiFillPieChart } from 'react-icons/ai';
+import { RiSpyFill } from 'react-icons/ri';
 import storage from 'renderer/lib/storage';
 import { MoonIcon, SunIcon } from '@chakra-ui/icons';
 
@@ -96,6 +98,16 @@ function Sidebar() {
         ButtonIcon={FaBitcoin}
         link="/app/bitcoin-trails"
         text="BTC Trails"
+      />
+      <SidebarButton
+        ButtonIcon={AiFillPieChart}
+        link="/app/db-stats"
+        text="Database Statistics"
+      />
+      <SidebarButton
+        ButtonIcon={RiSpyFill}
+        link="/app/tor-stats"
+        text="Tor Statistics"
       />
       <SidebarButton
         ButtonIcon={BsDatabaseFillX}
